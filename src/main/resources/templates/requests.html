@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <title>Все Запросы</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h1>Список Запросов</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Заголовок</th>
+      <th>Дата Создания</th>
+      <th>Статус</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request : ${requests}">
+      <td th:text="${request.id}"></td>
+      <td th:text="${request.title}"></td>
+      <td th:text="${#temporals.format(request.createdAt, 'dd-MM-yyyy HH:mm')}"></td>
+      <td>
+        <span th:if="${request.handled}" class="badge bg-success">Обработано</span>
+        <span th:unless="${request.handled}" class="badge bg-warning text-dark">Новый</span>
+      </td>
+      <td>
+        <a th:href="@{/requests/{id}(id=${request.id})}" class="btn btn-info btn-sm">Просмотр</a>
+        <a th:href="@{/requests/{id}/edit(id=${request.id})}" class="btn btn-primary btn-sm">Редактировать</a>
+        <form th:action="@{/requests/{id}/delete(id=${request.id})}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены?')">Удалить</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
