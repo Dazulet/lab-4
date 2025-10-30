@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <title th:text="${pageTitle}">Заявки</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2 class="mb-4" th:text="${pageTitle}"></h2>
+  <div class="row">
+    <div th:if="${#lists.isEmpty(requests)}" class="col-12">
+      <div class="alert alert-info">Заявок пока нет.</div>
+    </div>
+
+    <div th:each="request : ${requests}" class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span th:if="${!request.handled}" class="text-danger fw-bold">*(Новая)*</span>
+            Заявка от <span th:text="${request.userName}"></span>
+          </h5>
+          <p class="card-text mb-1">
+            <strong>Курс:</strong> <span th:text="${request.course.name}"></span>
+          </p>
+          <p class="card-text text-muted" th:text="${request.commentary}"></p>
+          <p class="card-text">
+            <strong>Тел:</strong> <span th:text="${request.phone}"></span>
+          </p>
+          <a th:href="@{/details/{id}(id=${request.id})}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
