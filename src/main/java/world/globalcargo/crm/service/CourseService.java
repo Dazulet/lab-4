@@ -16,7 +16,13 @@ public class CourseService {
     public List<Courses> getAllCourses() {
         return courseRepository.findAll();
     }
+    public Courses addCourse(Courses course) {
+        return courseRepository.save(course);
+    }
 
+    public void deleteCourse(Long id) {
+        courseRepository.deleteById(id);
+    }
 
     public Courses getCourseById(Long id) {
         return courseRepository.findById(id).orElse(null);

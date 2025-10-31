@@ -13,7 +13,9 @@ public class OperatorService {
 
     @Autowired
     private OperatorRepository operatorRepository;
-
+    public Operators addOperator(Operators operator) {
+        return operatorRepository.save(operator);
+    }
     public List<Operators> getAllOperators() {
         return operatorRepository.findAll();
     }
